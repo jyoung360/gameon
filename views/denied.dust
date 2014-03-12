@@ -1,6 +1,7 @@
 {>layout/}
 {<content}
   <div class="jumbotron">
-    <h1>DENIED</h1>
+    <h1>Invalid Login</h1>
+    <p>Your login was invalid.  Please enter your email and password above and try again.  If you continue to have issues, please contact josh.young.360@gmail.com.</p>
   </div>
 {/content}

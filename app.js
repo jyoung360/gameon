@@ -57,7 +57,7 @@ app.post('/login', function(req, res) {
     if(users[email] && users[email].password == password){
         req.session.regenerate(function(){
         req.session.user = users[email];
-        res.redirect('/restricted');
+        res.redirect('/week/0/day/0');
         });
     }
     else {
