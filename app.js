@@ -9,7 +9,6 @@ var path = require('path');
 var app = express();
 var dust = require('dustjs-linkedin')
 , cons = require('consolidate');
-var config = require('/opt/node/synap/config.js');
 var users = require('/opt/node/gameon/users/all.js');
 
 // all environments

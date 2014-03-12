@@ -3,13 +3,13 @@
 
 <div class="jumbotron">
 	<ul class="nav nav-tabs">
-		<li {@eq key=day value="0"}class="active"{/eq}><a href="/week/0/day/0">Monday</a></li>
-		<li {@eq key=day value="1"}class="active"{/eq}><a href="/week/0/day/1">Tuesday</a></li>
-		<li {@eq key=day value="2"}class="active"{/eq}><a href="/week/0/day/2">Wednesday</a></li>
-		<li {@eq key=day value="3"}class="active"{/eq}><a href="/week/0/day/3">Thursday</a></li>
-		<li {@eq key=day value="4"}class="active"{/eq}><a href="/week/0/day/4">Friday</a></li>
-		<li {@eq key=day value="5"}class="active"{/eq}><a href="/week/0/day/5">Saturday</a></li>
-		<li {@eq key=day value="6"}class="active"{/eq}><a href="/week/0/day/6">Sunday</a></li>
+		<li {@eq key=day value="0"}class="active"{/eq}><a href="/week/{week}/day/0">Monday</a></li>
+		<li {@eq key=day value="1"}class="active"{/eq}><a href="/week/{week}/day/1">Tuesday</a></li>
+		<li {@eq key=day value="2"}class="active"{/eq}><a href="/week/{week}/day/2">Wednesday</a></li>
+		<li {@eq key=day value="3"}class="active"{/eq}><a href="/week/{week}/day/3">Thursday</a></li>
+		<li {@eq key=day value="4"}class="active"{/eq}><a href="/week/{week}/day/4">Friday</a></li>
+		<li {@eq key=day value="5"}class="active"{/eq}><a href="/week/{week}/day/5">Saturday</a></li>
+		<li {@eq key=day value="6"}class="active"{/eq}><a href="/week/{week}/day/6">Sunday</a></li>
 	</ul>
     <h1>{data.label}</h1>
 	<form class="form-horizontal" role="form" method="post" action="/week/{week}/day/{day}">

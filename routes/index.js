@@ -39,14 +39,10 @@ exports.postWeek = function(req,res) {
 			console.log(err);
 		}
 		var userData = JSON.parse(data);
-		console.log(req.body);
 		for(var i in req.body) {
 			switch(i) {
 				case 'meals':
-					console.log('meals : '+req.body[i]);
 					for(var j in req.body[i]) {
-						console.log(j);
-						console.log( req.body[i][j]);
 						userData.weeks[week].days[day].meals[j].status = req.body[i][j]=='true'?true:false;
 					}
 					break;
@@ -78,24 +74,12 @@ exports.postWeek = function(req,res) {
 				userData.weeks[week].days[day].penalties.collusion.count = req.body[i];
 					break;
 			}
-			/*if(i.indexOf('.') != -1) {
-				var parts = i.split('.');
-				console.log(i+':'+userData.weeks[week].days[day][parts[0]][parts[1]]);
-				userData.weeks[week].days[day][parts[0]][parts[1]].count = req.body[i];
-			}
-			else {
-				console.log(i+':'+userData.weeks[week].days[day][i].status);
-				userData.weeks[week].days[day][i].status = req.body[i];
-			}*/
 
 		}
-		console.log(userData.weeks[week].days[day]);
 		fs.writeFile('/opt/node/gameon/users/'+req.session.user.dataFile,JSON.stringify(userData),function(err,data) {
 			if (err) {
 				console.log(err);
 			}
-			console.log(userData.weeks[week].days[day]);
-			//userData.weeks[week].days[day].
 			res.redirect('/week/'+week+'/day/'+day);
 		});
 	});
