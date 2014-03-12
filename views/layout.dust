@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </head>
+<body role="document">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Game On Scorekeeping</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          {?user}
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Week {weekLabel} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/week/0/day/0">Week 1</a></li>
+                <li><a href="/week/1/day/0">Week 2</a></li>
+                <li><a href="/week/2/day/0">Week 3</a></li>
+                <li><a href="/week/3/day/0">Week 4</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right" role="form" method="get" action="/logout" >
+            <button type="submit" class="btn btn-success">Logout</button>
+          </form>
+          {:else}
+          <form class="navbar-form navbar-right" role="form" method="post" action="/login" >
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+          {/user}
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+    {+content}
+      This is the base content.
+    {/content}
+    </div> <!-- /container -->
+  </body>
+</html>

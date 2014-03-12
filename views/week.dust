@@ -1,0 +1,125 @@
+{>layout/}
+{<content}
+
+<div class="jumbotron">
+	<ul class="nav nav-tabs">
+		<li {@eq key=day value="0"}class="active"{/eq}><a href="/week/0/day/0">Monday</a></li>
+		<li {@eq key=day value="1"}class="active"{/eq}><a href="/week/0/day/1">Tuesday</a></li>
+		<li {@eq key=day value="2"}class="active"{/eq}><a href="/week/0/day/2">Wednesday</a></li>
+		<li {@eq key=day value="3"}class="active"{/eq}><a href="/week/0/day/3">Thursday</a></li>
+		<li {@eq key=day value="4"}class="active"{/eq}><a href="/week/0/day/4">Friday</a></li>
+		<li {@eq key=day value="5"}class="active"{/eq}><a href="/week/0/day/5">Saturday</a></li>
+		<li {@eq key=day value="6"}class="active"{/eq}><a href="/week/0/day/6">Sunday</a></li>
+	</ul>
+    <h1>{data.label}</h1>
+	<form class="form-horizontal" role="form" method="post" action="/week/{week}/day/{day}">
+    	{#data.meals}
+	    <div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="meals[{$idx}]" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="meals[{$idx}]" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+		</div>
+    	{/data.meals}
+    	{#data.exercise}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="exercise" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="exercise" value="false" {?status}{:else}checked{/status} > No
+				</label>
+			</div>
+		</div>
+    	{/data.exercise}
+    	{#data.sleep}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="sleep" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="sleep" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+		</div>
+    	{/data.sleep}
+    	{#data.water}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="water" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="water" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+		</div>
+    	{/data.water}
+    	{#data.goodHabit}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="goodHabit" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="goodHabit" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+		</div>
+    	{/data.goodHabit}
+    	{#data.badHabit}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="badHabit" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="badHabit" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+		</div>
+    	{/data.badHabit}
+    	{#data.penalties.scale}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<input type="text" name="penalties.scale" value="{count}" placeholder="{count}">
+		</div>
+    	{/data.penalties.scale}
+    	{#data.penalties.snacks}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<input type="text" name="penalties.snacks" value="{count}" placeholder="{count}">
+		</div>
+    	{/data.penalties.snacks}
+    	{#data.penalties.alcohol}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<input type="text" name="penalties.alcohol" value="{count}" placeholder="{count}">
+		</div>
+    	{/data.penalties.alcohol}
+    	{#data.penalties.collusion}
+    	<div class="form-group">
+			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<input type="text" name="penalties.collusion" value="{count}" placeholder="{count}">
+		</div>
+    	{/data.penalties.collusion}
+    	<div class="form-group">
+			<div class="col-sm-offset-6 col-sm-6">
+				<button type="submit" class="btn btn-default">Save</button>
+			</div>
+		</div>
+	</form>
+  </div>
+{/content}

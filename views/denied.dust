@@ -1,0 +1,6 @@
+{>layout/}
+{<content}
+  <div class="jumbotron">
+    <h1>DENIED</h1>
+  </div>
+{/content}
