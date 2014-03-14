@@ -11,115 +11,204 @@
 		<li {@eq key=day value="5"}class="active"{/eq}><a href="/week/{week}/day/5">Saturday</a></li>
 		<li {@eq key=day value="6"}class="active"{/eq}><a href="/week/{week}/day/6">Sunday</a></li>
 	</ul>
-    <h1>{data.label}</h1>
-	<form class="form-horizontal" role="form" method="post" action="/week/{week}/day/{day}">
+    <h2><span id="dailyTotal" class="pull-right">Score: 0</span></h2>
+	<form id="weekForm" class="form-horizontal" role="form" method="post" action="/week/{week}/day/{day}">
     	{#data.meals}
 	    <div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<label class="col-sm-4 control-label">Meal {@math key="{$idx}" method="add" operand="1"/}</label>
 	    	<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?status}active{/status}">
-					<input type="radio" name="meals[{$idx}]" value="true" {?status}checked{/status}> Yes
+					<input type="radio" name="meals[{$idx}]" data-points="6" data-target="meals_{$idx}" value="true" {?status}checked{/status}> Yes
 				</label>
 				<label class="btn btn-primary {?status}{:else}active{/status}">
-					<input type="radio" name="meals[{$idx}]" value="false" {?status}{:else}checked{/status}> No
+					<input type="radio" name="meals[{$idx}]" data-points="0" data-target="meals_{$idx}" value="false" {?status}{:else}checked{/status}> No
 				</label>
 			</div>
+			<span id="meals_{$idx}" class="points"></span>
 		</div>
     	{/data.meals}
     	{#data.exercise}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<label class="col-sm-4 control-label">Did you get 20 mins of exercise today?</label>
 	    	<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?status}active{/status}">
-					<input type="radio" name="exercise" value="true" {?status}checked{/status}> Yes
+					<input type="radio" name="exercise" data-points="20" data-target="exercise" value="true" {?status}checked{/status}> Yes
 				</label>
 				<label class="btn btn-primary {?status}{:else}active{/status}">
-					<input type="radio" name="exercise" value="false" {?status}{:else}checked{/status} > No
+					<input type="radio" name="exercise" data-points="0" data-target="exercise" value="false" {?status}{:else}checked{/status} > No
 				</label>
 			</div>
+			<span id="exercise" class="points"></span>
 		</div>
     	{/data.exercise}
     	{#data.sleep}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<label class="col-sm-4 control-label">Did you get 7 hours of sleep last night?</label>
 	    	<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?status}active{/status}">
-					<input type="radio" name="sleep" value="true" {?status}checked{/status}> Yes
+					<input type="radio" name="sleep" data-points="15" data-target="sleep" value="true" {?status}checked{/status}> Yes
 				</label>
 				<label class="btn btn-primary {?status}{:else}active{/status}">
-					<input type="radio" name="sleep" value="false" {?status}{:else}checked{/status}> No
+					<input type="radio" name="sleep" data-points="0" data-target="sleep" value="false" {?status}{:else}checked{/status}> No
 				</label>
 			</div>
+			<span id="sleep" class="points"></span>
 		</div>
     	{/data.sleep}
     	{#data.water}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<label class="col-sm-4 control-label">Did you drink 3 liters of water today?</label>
 	    	<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?status}active{/status}">
-					<input type="radio" name="water" value="true" {?status}checked{/status}> Yes
+					<input type="radio" name="water" data-points="10" data-target="water" value="true" {?status}checked{/status}> Yes
 				</label>
 				<label class="btn btn-primary {?status}{:else}active{/status}">
-					<input type="radio" name="water" value="false" {?status}{:else}checked{/status}> No
+					<input type="radio" name="water" data-points="0" data-target="water" value="false" {?status}{:else}checked{/status}> No
 				</label>
 			</div>
+			<span id="water" class="points"></span>
 		</div>
     	{/data.water}
     	{#data.goodHabit}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<label class="col-sm-4 control-label">Did you complete your good habit today?</label>
 	    	<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?status}active{/status}">
-					<input type="radio" name="goodHabit" value="true" {?status}checked{/status}> Yes
+					<input type="radio" name="goodHabit" data-points="10" data-target="goodHabit" value="true" {?status}checked{/status}> Yes
 				</label>
 				<label class="btn btn-primary {?status}{:else}active{/status}">
-					<input type="radio" name="goodHabit" value="false" {?status}{:else}checked{/status}> No
+					<input type="radio" name="goodHabit" data-points="0" data-target="goodHabit" value="false" {?status}{:else}checked{/status}> No
 				</label>
 			</div>
+			<span id="goodHabit" class="points"></span>
 		</div>
     	{/data.goodHabit}
     	{#data.badHabit}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
+			<label class="col-sm-4 control-label">Did you break your bad habit today?</label>
 	    	<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?status}active{/status}">
-					<input type="radio" name="badHabit" value="true" {?status}checked{/status}> Yes
+					<input type="radio" name="badHabit" data-points="10" data-target="badHabit" value="true" {?status}checked{/status}> Yes
 				</label>
 				<label class="btn btn-primary {?status}{:else}active{/status}">
-					<input type="radio" name="badHabit" value="false" {?status}{:else}checked{/status}> No
+					<input type="radio" name="badHabit" data-points="0" data-target="badHabit" value="false" {?status}{:else}checked{/status}> No
 				</label>
 			</div>
+			<span id="badHabit" class="points"></span>
 		</div>
     	{/data.badHabit}
+    	{#data.communication}
+    	<div class="form-group">
+			<label class="col-sm-4 control-label">Did you communicate with your team and other teams today?</label>
+	    	<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="communication" data-points="5" data-target="communication" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="communication" data-points="0" data-target="communication" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+			<span id="communication" class="points"></span>
+		</div>
+    	{/data.communication}
     	{#data.penalties.scale}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
-			<input type="text" name="penalties.scale" value="{count}" placeholder="{count}">
+			<label class="col-sm-4 control-label">How many times (more than once) did you weight yourself today?</label>
+			<input type="text" name="penalties.scale" data-points="-1" data-target="scale" value="{count}" placeholder="{count}">
+			<span id="scale" class="points"></span>
 		</div>
     	{/data.penalties.scale}
     	{#data.penalties.snacks}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
-			<input type="text" name="penalties.snacks" value="{count}" placeholder="{count}">
+			<label class="col-sm-4 control-label">How many snacks did you have today?</label>
+			<input type="text" name="penalties.snacks" data-points="-10" data-target="snacks" value="{count}" placeholder="{count}">
+			<span id="snacks" class="points"></span>
 		</div>
     	{/data.penalties.snacks}
     	{#data.penalties.alcohol}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
-			<input type="text" name="penalties.alcohol" value="{count}" placeholder="{count}">
+			<label class="col-sm-4 control-label">How many drinks over 1 (or over 5 on your free day) did you have today?</label>
+			<input type="text" name="penalties.alcohol" data-points="-25" data-target="alcohol" value="{count}" placeholder="{count}">
+			<span id="alcohol" class="points"></span>
 		</div>
     	{/data.penalties.alcohol}
     	{#data.penalties.collusion}
     	<div class="form-group">
-			<label for="inputEmail3" class="col-sm-4 control-label">{label}</label>
-			<input type="text" name="penalties.collusion" value="{count}" placeholder="{count}">
+			<label class="col-sm-4 control-label">How many times did you collude today?</label>
+			<input type="text" name="penalties.collusion" data-points="-20" data-target="collusion" value="{count}" placeholder="{count}">
+			<span id="collusion" class="points"></span>
 		</div>
     	{/data.penalties.collusion}
+    	{#data.penalties.changeHabit}
+    	<div class="form-group">
+			<label class="col-sm-4 control-label">Did you change your habit today?</label>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?status}active{/status}">
+					<input type="radio" name="penalties.changeHabit" data-points="-50" data-target="habitChange" value="true" {?status}checked{/status}> Yes
+				</label>
+				<label class="btn btn-primary {?status}{:else}active{/status}">
+					<input type="radio" name="penalties.changeHabit" data-points="0" data-target="habitChange" value="false" {?status}{:else}checked{/status}> No
+				</label>
+			</div>
+			<span id="habitChange" class="points"></span>
+		</div>
+    	{/data.penalties.changeHabit}
+    	{@eq key=day value="6"}
+    	<div class="form-group">
+			<label class="col-sm-4 control-label">Weight at start of week?</label>
+			<input type="text" name="startingWeight" value="{startingWeight}" placeholder="Weight">
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Weight at end of week?</label>
+			<input type="text" name="endingWeight" value="{endingWeight}" placeholder="Weight">
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Did you participate and succeed in a fitness challenge?</label>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?fitnessSuccess}active{/fitnessSuccess}">
+					<input type="radio" name="fitnessSuccess" value="true" {?fitnessSuccess}checked{/fitnessSuccess}> Yes
+				</label>
+				<label class="btn btn-primary {?fitnessSuccess}{:else}active{/fitnessSuccess}">
+					<input type="radio" name="fitnessSuccess" value="false" {?fitnessSuccess}{:else}checked{/fitnessSuccess}> No
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Did you have any drinks this week?</label>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?alcoholBonus}active{/alcoholBonus}">
+					<input type="radio" name="alcoholBonus" data-points="5" value="true" {?alcoholBonus}checked{/alcoholBonus}> Yes
+				</label>
+				<label class="btn btn-primary {?alcoholBonus}{:else}active{/alcoholBonus}">
+					<input type="radio" name="alcoholBonus" data-points="0" value="false" {?alcoholBonus}{:else}checked{/alcoholBonus}> No
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Did you make helpful posts this week?</label>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary {?postingBonus}active{/postingBonus}">
+					<input type="radio" name="postingBonus" data-points="5" value="true" {?postingBonus}checked{/postingBonus}> Yes
+				</label>
+				<label class="btn btn-primary {?postingBonus}{:else}active{/postingBonus}">
+					<input type="radio" name="postingBonus" data-points="0" value="false" {?postingBonus}{:else}checked{/postingBonus}> No
+				</label>
+			</div>
+		</div>
+    	{/eq}
     	<div class="form-group">
 			<div class="col-sm-offset-6 col-sm-6">
 				<button type="submit" class="btn btn-default">Save</button>
 			</div>
 		</div>
+		{@eq key=day value="6"}
+		<div class="form-group">
+			<div class="col-sm-offset-6 col-sm-6">
+				<button type="submit" class="btn btn-default btn-success">Official Submit</button>
+			</div>
+		</div>
+		{/eq}
 	</form>
   </div>
+  <script src="/javascripts/week.js"></script>
 {/content}

@@ -1,0 +1,35 @@
+{>layout/}
+{<content}
+  <div class="jumbotron">
+    <h1>{user.firstName} {user.lastName} Scoresheet</h1>
+	{#scores.weeks}
+	<div class="bs-example">
+		<h3>Week {@math key="{$idx}" method="add" operand="1"/} Score &mdash; {score}</h3>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					{#days}
+					<th class="active">{day}</th>
+					{/days}
+					<th class="warning">Challenge Bonus</th>
+					<th class="warning">Alcohol Bonus</th>
+					<th class="warning">Time Bonus</th>
+					<th class="warning">Posting Bonus</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					{#days}
+					<td class="success">{score}</td>
+					{/days}
+					<td class="info">{challengeBonus}</td>
+					<td class="info">{alcoholBonus}</td>
+					<td class="info">{timeBonus}</td>
+					<td class="info">{postingBonus}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	{/scores.weeks}
+  </div>
+{/content}

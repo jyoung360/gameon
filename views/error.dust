@@ -1,0 +1,7 @@
+{>layout/}
+{<content}
+  <div class="jumbotron">
+    <h1>Ruh Roh!</h1>
+    <p>{err.stack}</p>
+  </div>
+{/content}

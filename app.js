@@ -39,14 +39,13 @@ function restrict(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    req.session.error = 'Access denied!';
-    res.redirect('/');
+  	return res.render('denied');
   }
 }
 
 var routes = require('./routes');
 app.get('/', routes.index);
-app.get('/restricted', restrict, routes.restricted);
+app.get('/dashboard', restrict, routes.dashboard);
 app.get('/denied', routes.denied);
 app.get('/week/:week/day/:day', restrict, routes.getWeek);
 app.post('/week/:week/day/:day', restrict, routes.postWeek);
@@ -57,7 +56,8 @@ app.post('/login', function(req, res) {
     if(users[email] && users[email].password == password){
         req.session.regenerate(function(){
         req.session.user = users[email];
-        res.redirect('/week/0/day/0');
+        res.redirect('/dashboard');
+        //res.redirect('/week/0/day/0');
         });
     }
     else {
