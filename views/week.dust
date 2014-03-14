@@ -153,6 +153,10 @@
 			<span id="habitChange" class="points"></span>
 		</div>
     	{/data.penalties.changeHabit}
+    	<div class="form-group">
+			<label class="col-sm-4 control-label">Current Weight</label>
+			<input type="text" name="weight" value="{data.weight}" placeholder="{data.weight}">
+		</div>
     	{@eq key=day value="6"}
     	<div class="form-group">
 			<label class="col-sm-4 control-label">Weight at start of week?</label>
@@ -161,6 +165,7 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Weight at end of week?</label>
 			<input type="text" name="endingWeight" value="{endingWeight}" placeholder="Weight">
+			<span id="weightGoal" class="points"></span>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Did you participate and succeed in a fitness challenge?</label>
@@ -174,18 +179,12 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-4 control-label">Did you have any drinks this week?</label>
-			<div class="btn-group" data-toggle="buttons">
-				<label class="btn btn-primary {?alcoholBonus}active{/alcoholBonus}">
-					<input type="radio" name="alcoholBonus" data-points="5" value="true" {?alcoholBonus}checked{/alcoholBonus}> Yes
-				</label>
-				<label class="btn btn-primary {?alcoholBonus}{:else}active{/alcoholBonus}">
-					<input type="radio" name="alcoholBonus" data-points="0" value="false" {?alcoholBonus}{:else}checked{/alcoholBonus}> No
-				</label>
-			</div>
+			<label class="col-sm-4 control-label">How many drinks did you have this week?</label>
+			<input type="text" name="alcoholBonus" value="{alcoholBonus}" placeholder="0">
+			<span id="alcoholChange" class="points"></span>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-4 control-label">Did you make helpful posts this week?</label>
+			<label class="col-sm-4 control-label">Did you make helpful posts to FB this week?</label>
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary {?postingBonus}active{/postingBonus}">
 					<input type="radio" name="postingBonus" data-points="5" value="true" {?postingBonus}checked{/postingBonus}> Yes
@@ -201,13 +200,6 @@
 				<button type="submit" class="btn btn-default">Save</button>
 			</div>
 		</div>
-		{@eq key=day value="6"}
-		<div class="form-group">
-			<div class="col-sm-offset-6 col-sm-6">
-				<button type="submit" class="btn btn-default btn-success">Official Submit</button>
-			</div>
-		</div>
-		{/eq}
 	</form>
   </div>
   <script src="/javascripts/week.js"></script>

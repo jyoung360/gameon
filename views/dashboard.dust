@@ -2,6 +2,7 @@
 {<content}
   <div class="jumbotron">
     <h1>{user.firstName} {user.lastName} Scoresheet</h1>
+    <div id="chart_div"></div>
 	{#scores.weeks}
 	<div class="bs-example">
 		<h3>Week {@math key="{$idx}" method="add" operand="1"/} Score &mdash; {score}</h3>
@@ -32,4 +33,18 @@
 	</div>
 	{/scores.weeks}
   </div>
+  <script type="text/javascript">
+      google.load('visualization', '1.0', {'packages':['corechart']});
+      google.setOnLoadCallback(chartTime);
+      function chartTime() {
+        var data =   [
+        {#scores.weeks}
+	        {#days}
+			['{day}',{weight},{score}],
+			{/days}
+		{/scores.weeks}
+		];
+		drawChart(data);
+      }
+    </script>
 {/content}

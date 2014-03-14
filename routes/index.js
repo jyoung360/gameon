@@ -3,7 +3,7 @@ var fs = require('fs');
  * GET home page.
  */
 exports.index = function(req, res){
-	res.render('index', { title: 'Express' });
+	res.render('index', { user: req.session.user });
 };
 
 exports.denied = function(req, res){
@@ -29,13 +29,20 @@ exports.dashboard = function(req, res){
 				var day = week.days[j];
 				var obj = { 
 					'day': day.label,
-					'score' : (day.score === undefined)?0:day.score
+					'score' : (day.score === undefined)?0:day.score,
+					'weight' : (day.weight === undefined)?0:day.weight
 				}
 				weekData.push(obj);
 				weekScore += (day.score === undefined)?0:parseInt(day.score,10);
 			}
 			var challengeBonus = userData.weeks[i].challengeMet?weekScore*.2:0;
-			var alcoholBonus = userData.weeks[i].alcoholBonus?25:0;
+			var alcoholBonus = 0;
+			if(userData.weeks[i].alcoholBonus == 0) {
+				alcoholBonus = 25;
+			}
+			else if(userData.weeks[i].alcoholBonus > 5) {
+				alcoholBonus = -25*(userData.weeks[i].alcoholBonus-5);
+			}
 			var postingBonus = userData.weeks[i].postingBonus?5:0;
 			weekScore += challengeBonus;
 			weekScore += alcoholBonus;
@@ -137,12 +144,15 @@ exports.postWeek = function(req,res) {
 					userData.weeks[week].days[day].penalties.changeHabit.status = req.body[i]=='true'?true:false;
 					dailyScore -= req.body[i]=='true'?50:0;
 					break;
+				case 'weight':
+					userData.weeks[week].days[day].weight = isNaN(parseInt(req.body[i],10))?0:parseInt(req.body[i],10);
+					break;
 				case 'fitnessSuccess':
 					userData.weeks[week].fitnessSuccess = req.body[i]=='true'?true:false;
 					userData.weeks[week].challengeMet = req.body[i]=='true'?true:false;
 					break;
 				case 'alcoholBonus':
-					userData.weeks[week].alcoholBonus = req.body[i]=='true'?true:false;
+					userData.weeks[week].alcoholBonus = isNaN(parseInt(req.body[i],10))?0:parseInt(req.body[i],10);
 					break;
 				case 'postingBonus':
 					userData.weeks[week].postingBonus = req.body[i]=='true'?true:false;
