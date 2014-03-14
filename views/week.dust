@@ -125,13 +125,6 @@
 			<span id="snacks" class="points"></span>
 		</div>
     	{/data.penalties.snacks}
-    	{#data.penalties.alcohol}
-    	<div class="form-group">
-			<label class="col-sm-4 control-label">How many drinks over 1 (or over 5 on your free day) did you have today?</label>
-			<input type="text" name="penalties.alcohol" data-points="-25" data-target="alcohol" value="{count}" placeholder="{count}">
-			<span id="alcohol" class="points"></span>
-		</div>
-    	{/data.penalties.alcohol}
     	{#data.penalties.collusion}
     	<div class="form-group">
 			<label class="col-sm-4 control-label">How many times did you collude today?</label>
