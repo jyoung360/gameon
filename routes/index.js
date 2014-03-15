@@ -88,40 +88,9 @@ exports.dashboard = function(req, res){
 			console.log(err);
 			return res.render('error',{"err":err});
 		}
-		var userData = JSON.parse(data);
-		var scoreData = {
-			"weeks" : []
-		}
-		for(var i in userData.weeks) {
-			var week = userData.weeks[i];
-			var weekNumber = parseInt(i,10)+1;
-			var weekScore = 0;
-			var weekData = [];
-			for(var j in week.days) {
-				var day = week.days[j];
-				var obj = { 
-					'day': day.label,
-					'score' : (day.score === undefined)?0:day.score,
-					'weight' : (day.weight === undefined)?0:day.weight
-				}
-				weekData.push(obj);
-				weekScore += (day.score === undefined)?0:parseInt(day.score,10);
-			}
-			var challengeBonus = userData.weeks[i].challengeMet?weekScore*.2:0;
-			var alcoholBonus = 0;
-			if(userData.weeks[i].alcoholBonus == 0) {
-				alcoholBonus = 25;
-			}
-			else if(userData.weeks[i].alcoholBonus > 5) {
-				alcoholBonus = -25*(userData.weeks[i].alcoholBonus-5);
-			}
-			var postingBonus = userData.weeks[i].postingBonus?5:0;
-			weekScore += challengeBonus;
-			weekScore += alcoholBonus;
-			weekScore += postingBonus;
-			weekScore += 10;
-			scoreData.weeks.push({ "days":weekData, "score":weekScore, "alcoholBonus":alcoholBonus, "challengeBonus":challengeBonus, "timeBonus":10, "postingBonus":postingBonus });
-		}
+
+		//var userData = JSON.parse(data);
+		var scoreData = calculateScoreFromData(data);
 		res.render('dashboard', { 
 			scores: scoreData,
 			user: req.session.user
