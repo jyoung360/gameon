@@ -17,6 +17,7 @@
     var options = {'title':'Weight and score by day',
                    'width': 1000,
                    'height':300,
+                   'pointSize' :5,
                   'backgroundColor':'#eee'};
 
     // Instantiate and draw our chart, passing in some options.
@@ -47,6 +48,7 @@
     var options = {'title':'Score by day',
                    'width': 1000,
                    'height':300,
+                   'pointSize' :5,
                   'backgroundColor':'#eee'};
 
     // Instantiate and draw our chart, passing in some options.
