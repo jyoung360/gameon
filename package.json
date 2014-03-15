@@ -10,6 +10,7 @@
     "jade": "*",
     "dustjs-linkedin": "*",
     "dustjs-helpers": "*",
-    "consolidate": "*"
+    "consolidate": "*",
+    "async":"*"
   }
 }

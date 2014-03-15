@@ -2,6 +2,40 @@
 {<content}
   <div class="jumbotron">
     <h1>Game On Score Tracking System</h1>
+    {?user}
+    <p>Charts go here.</p>
+    {:else}
     <p>Please Login above to enter your scores.</p>
+    {/user}
+    <div id="chart_div"></div>
   </div>
+    <script type="text/javascript">
+      google.load('visualization', '1.0', {'packages':['corechart']});
+      google.setOnLoadCallback(chartTime);
+      function chartTime() {
+        var cols = [{"string":"Days"}];
+        var rows = [];
+        {#data}
+          {#users}
+            cols.push({"number":"{name}"});
+          {/users}
+        {/data}
+        {#data}
+          {#users}
+          var user = {};
+          user.name = "{name}";
+          user.scores = [];
+            {#scores}
+              {#weeks}
+                {#days}
+                user.scores.push({"day":"{day}","score":{score}});
+                {/days}
+              {/weeks}
+            {/scores}
+          rows.push(user);
+          {/users}
+        {/data}
+        drawTeamChart(cols,rows);
+      }
+    </script>
 {/content}

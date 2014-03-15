@@ -1,14 +1,86 @@
 var fs = require('fs');
+var async = require('async');
+var allUsers = require('/opt/node/gameon/users/all.js');
 /*
  * GET home page.
  */
 exports.index = function(req, res){
-	res.render('index', { user: req.session.user });
+	var dataToRender = {
+		"users" : []
+	}
+	var array = [];
+	for(var i in allUsers) {
+		array.push(allUsers[i]);
+	}
+	async.each(array, function(user,callback) {
+		//console.log(user.dataFile);
+		fs.readFile('/opt/node/gameon/users/'+user.dataFile,{encoding:'utf8'}, function (err, data) {
+			if(!data) { return callback(null); }
+			var score = calculateScoreFromData(data);
+			//var userData = JSON.parse(data);
+			var obj = {};
+			obj.name = user.firstName;
+			obj.scores = score;
+			dataToRender.users.push(obj);
+			return callback(null);
+		});
+	}, function(err){
+		if(err) {
+			console.log(err);
+			return res.render('error',{"err":err});
+		}
+		var renderObj = {
+			user: req.session.user,
+			data: dataToRender
+		}
+		res.render('index', renderObj);
+	    // if any of the saves produced an error, err would equal that error
+	});
+
+	
 };
 
 exports.denied = function(req, res){
 	res.render('denied', { user: req.session.user });
 };
+
+function calculateScoreFromData(data) {
+	var userData = JSON.parse(data);
+	var scoreData = {
+		"weeks" : []
+	}
+	for(var i in userData.weeks) {
+		var week = userData.weeks[i];
+		var weekNumber = parseInt(i,10)+1;
+		var weekScore = 0;
+		var weekData = [];
+		for(var j in week.days) {
+			var day = week.days[j];
+			var obj = { 
+				'day': day.label,
+				'score' : (day.score === undefined)?0:day.score,
+				'weight' : (day.weight === undefined)?0:day.weight
+			}
+			weekData.push(obj);
+			weekScore += (day.score === undefined)?0:parseInt(day.score,10);
+		}
+		var challengeBonus = userData.weeks[i].challengeMet?weekScore*.2:0;
+		var alcoholBonus = 0;
+		if(userData.weeks[i].alcoholBonus == 0) {
+			alcoholBonus = 25;
+		}
+		else if(userData.weeks[i].alcoholBonus > 5) {
+			alcoholBonus = -25*(userData.weeks[i].alcoholBonus-5);
+		}
+		var postingBonus = userData.weeks[i].postingBonus?5:0;
+		weekScore += challengeBonus;
+		weekScore += alcoholBonus;
+		weekScore += postingBonus;
+		weekScore += 10;
+		scoreData.weeks.push({ "days":weekData, "score":weekScore, "alcoholBonus":alcoholBonus, "challengeBonus":challengeBonus, "timeBonus":10, "postingBonus":postingBonus });
+	}
+	return scoreData;
+}
 
 exports.dashboard = function(req, res){
 	fs.readFile('/opt/node/gameon/users/'+req.session.user.dataFile,{encoding:'utf8'}, function (err, data) {
