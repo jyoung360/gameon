@@ -9,6 +9,9 @@ exports.index = function(req, res){
 		"users" : []
 	}
 	var array = [];
+	var teams = {};
+	var teamDivisors = {};
+
 	for(var i in allUsers) {
 		array.push(allUsers[i]);
 	}
@@ -20,8 +23,24 @@ exports.index = function(req, res){
 			//var userData = JSON.parse(data);
 			var obj = {};
 			obj.name = user.firstName;
+			if(teamDivisors[user.team]) {
+				teamDivisors[user.team]++;
+			}
+			else {
+				teamDivisors[user.team]=1;
+			}
 			obj.scores = score;
 			dataToRender.users.push(obj);
+			for(var i in score.weeks) {
+				if(!teams[user.team]) { 
+					teams[user.team] = { "weeks":[] }
+					for(var j = 0;j<score.weeks.length;j++) {
+						teams[user.team].weeks.push(0);
+					}
+				}
+				teams[user.team].weeks[i] += score.weeks[i].score;
+			}
+			
 			return callback(null);
 		});
 	}, function(err){
@@ -29,15 +48,51 @@ exports.index = function(req, res){
 			console.log(err);
 			return res.render('error',{"err":err});
 		}
+
+		dataToRender.leaderBoards = {
+			weeks : []
+		}
+
+		for(var week = 0; week < 4; week++) {
+			var topScore = 0;
+			var obj = {};
+			obj.label = "Week "+(week+1);
+			obj.winners = [];
+			obj.scores = [];
+			for(var i in teams) {
+				var team = {}
+				team.name = i;
+				team.score = teams[i].weeks[week]/teamDivisors[i];
+				team.winner = false;
+				obj.scores.push(team);
+			}
+
+			obj.scores.sort(function(a,b) {
+				if(a.score > b.score) {
+					return -1;
+				}
+				if(a.score < b.score) {
+					return 1;
+				}
+				return 0;
+			});
+			
+			var topTeamScore = obj.scores[0].score;
+			for(var i in obj.scores) {
+				if(obj.scores[i].score >= topTeamScore) {
+					obj.scores[i].winner = true;
+					obj.winners.push(obj.scores[i].name);
+				}
+			}
+			dataToRender.leaderBoards.weeks.push(obj);
+		}
+
 		var renderObj = {
 			user: req.session.user,
 			data: dataToRender
 		}
 		res.render('index', renderObj);
-	    // if any of the saves produced an error, err would equal that error
 	});
-
-	
 };
 
 exports.denied = function(req, res){

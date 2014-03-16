@@ -9,3 +9,6 @@
 #weekForm input[type=text] {
 	width: 92px;
 }
+table.winner tr.success {
+	font-weight: bold;
+}

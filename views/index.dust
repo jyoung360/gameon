@@ -7,7 +7,28 @@
     {:else}
     <p>Please Login above to enter your scores.</p>
     {/user}
-    <div id="chart_div"></div>
+    <div id="individual_chart_div"></div>
+    <div class="row">
+    {#data.leaderBoards.weeks}
+    <div class="col-xs-3">
+      <h2>{label}</h2>
+      <div class="table-responsive">
+        <table class="table winner">
+          <thead>
+            <tr><th>Team</th><th>Score</th></tr>
+          </thead>
+          <tbody>
+            {#scores}
+            <tr class="{?winner}success{/winner}">
+              <td>{name}</td><td>{score}</td>
+            </tr>
+            {/scores}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {/data.leaderBoards.weeks}
+    </div>
   </div>
     <script type="text/javascript">
       google.load('visualization', '1.0', {'packages':['corechart']});
