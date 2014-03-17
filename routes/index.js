@@ -20,6 +20,7 @@ exports.index = function(req, res){
 		fs.readFile('/opt/node/gameon/users/'+user.dataFile,{encoding:'utf8'}, function (err, data) {
 			if(!data) { return callback(null); }
 			var score = calculateScoreFromData(data);
+			console.log(user.firstName+" : "+score.weeks[1]);
 			//var userData = JSON.parse(data);
 			var obj = {};
 			obj.name = user.firstName;
@@ -29,6 +30,8 @@ exports.index = function(req, res){
 			else {
 				teamDivisors[user.team]=1;
 			}
+
+			console.log(teamDivisors[user.team]);
 			obj.scores = score;
 			dataToRender.users.push(obj);
 			for(var i in score.weeks) {
@@ -241,7 +244,7 @@ exports.postWeek = function(req,res) {
 					dailyScore -= req.body[i]=='true'?50:0;
 					break;
 				case 'weight':
-					userData.weeks[week].days[day].weight = isNaN(parseInt(req.body[i],10))?0:parseInt(req.body[i],10);
+					userData.weeks[week].days[day].weight = isNaN(parseFloat(req.body[i]))?0:parseFloat(req.body[i]);
 					break;
 				case 'fitnessSuccess':
 					userData.weeks[week].fitnessSuccess = req.body[i]=='true'?true:false;
@@ -254,17 +257,17 @@ exports.postWeek = function(req,res) {
 					userData.weeks[week].postingBonus = req.body[i]=='true'?true:false;
 					break;
 				case 'startingWeight':
-					userData.weeks[week].startingWeight = isNaN(parseInt(req.body[i],10))?0:parseInt(req.body[i],10);
+					userData.weeks[week].startingWeight = isNaN(parseFloat(req.body[i]))?0:parseFloat(req.body[i]);
 					break;
 				case 'endingWeight':
-					userData.weeks[week].endingWeight = isNaN(parseInt(req.body[i],10))?0:parseInt(req.body[i],10);
+					userData.weeks[week].endingWeight = isNaN(parseFloat(req.body[i]))?0:parseFloat(req.body[i]);
 					break;
 			}
 
 		}
 		if(!userData.weeks[week].challengeMet) {
-			var startingWeight = parseInt(req.body.startingWeight,10);
-			var endingWeight = parseInt(req.body.endingWeight,10);
+			var startingWeight = parseFloat(req.body.startingWeight);
+			var endingWeight = parseFloat(req.body.endingWeight);
 			if(!isNaN(startingWeight) && !isNaN(endingWeight) && ((startingWeight-endingWeight)/startingWeight >= .01)) {
 				userData.weeks[week].challengeMet = true;
 			}

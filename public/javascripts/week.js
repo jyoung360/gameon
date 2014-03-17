@@ -28,6 +28,8 @@ function calculateTotalPoints() {
 	});
 	$('#weekForm input[type=text]').each(function(index,element){
 		var points = parseInt($(this).attr('data-points'),10);
+		if(isNaN(points)) points = 0;
+
 		var target = $(this).attr('data-target');
 		var val = isNaN(parseInt($(this).val(),10))?1:parseInt($(this).val(),10);
 		points *= val;
@@ -43,6 +45,7 @@ function calculateTotalPoints() {
 		else {
 			$('#'+target).removeClass('negative');
 		}
+
 		totalPoints += points;
 	});
 	var drinks = parseInt($('#weekForm input[name=alcoholBonus]').val(),10);
@@ -63,19 +66,17 @@ function calculateTotalPoints() {
 	}
 
 	if($('#weekForm input[name=startingWeight]').length){
-		var startingWeight = parseInt($('#weekForm input[name=startingWeight]').val(),10);
-		var endingWeight = parseInt($('#weekForm input[name=endingWeight]').val(),10);
-		console.log(startingWeight);
-		//if(isNaN(startingWeight) || isNaN(endingWeight)) { return; }
+		var startingWeight = parseFloat($('#weekForm input[name=startingWeight]').val());
+		var endingWeight = parseFloat($('#weekForm input[name=endingWeight]').val());
 		var weightChange = (((startingWeight-endingWeight)/startingWeight)*100).toFixed(2);
-		if(isNaN(weightChange)) { return; }
-		console.log(weightChange);
-		$('#weightGoal').html(weightChange+'%');
-		if(weightChange < 1) {
-			$('#weightGoal').addClass('negative');
-		}
-		else {
-			$('#weightGoal').removeClass('negative');
+		if(!isNaN(weightChange)) { 
+			$('#weightGoal').html(weightChange+'%');
+			if(weightChange < 1) {
+				$('#weightGoal').addClass('negative');
+			}
+			else {
+				$('#weightGoal').removeClass('negative');
+			}
 		}
 	}
 
