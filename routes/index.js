@@ -16,11 +16,9 @@ exports.index = function(req, res){
 		array.push(allUsers[i]);
 	}
 	async.each(array, function(user,callback) {
-		//console.log(user.dataFile);
 		fs.readFile('/opt/node/gameon/users/'+user.dataFile,{encoding:'utf8'}, function (err, data) {
 			if(!data) { return callback(null); }
 			var score = calculateScoreFromData(data);
-			console.log(user.firstName+" : "+score.weeks[1]);
 			//var userData = JSON.parse(data);
 			var obj = {};
 			obj.name = user.firstName;
@@ -31,7 +29,6 @@ exports.index = function(req, res){
 				teamDivisors[user.team]=1;
 			}
 
-			console.log(teamDivisors[user.team]);
 			obj.scores = score;
 			dataToRender.users.push(obj);
 			for(var i in score.weeks) {
@@ -65,7 +62,7 @@ exports.index = function(req, res){
 			for(var i in teams) {
 				var team = {}
 				team.name = i;
-				team.score = teams[i].weeks[week]/teamDivisors[i];
+				team.score = (teams[i].weeks[week]/teamDivisors[i]).toFixed(2);
 				team.winner = false;
 				obj.scores.push(team);
 			}
