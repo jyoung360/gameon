@@ -34,7 +34,7 @@
     }
 
     var row = [];
-    for(var i = 0;i<28;i++) {
+    for(var i = 0;i<21;i++) {
       var cells = [];
       cells.push(rows[0].scores[i].day);
       for(var j in rows) {

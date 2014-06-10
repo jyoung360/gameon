@@ -53,7 +53,7 @@ exports.index = function(req, res){
 			weeks : []
 		}
 
-		for(var week = 0; week < 4; week++) {
+		for(var week = 0; week < 3; week++) {
 			var topScore = 0;
 			var obj = {};
 			obj.label = "Week "+(week+1);
