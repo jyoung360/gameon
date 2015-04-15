@@ -11,6 +11,8 @@
     "dustjs-linkedin": "*",
     "dustjs-helpers": "*",
     "consolidate": "*",
-    "async":"*"
+    "async":"*",
+    "redis":"0.12.1",
+    "moment" : "2.8.4"
   }
 }

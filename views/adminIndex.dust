@@ -1,0 +1,33 @@
+{>layout/}
+{<content}
+  <div class="jumbotron">
+    <h1>Admin</h1>
+    {?user}
+    {:else}
+    <p>Please Login above to administer the system.</p>
+    {/user}
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Game Name</th>
+          <th>Start Date</th>
+          <th>Duration</th>
+          <th>Teams</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {#games}
+        <tr>
+          <td>{gameName}</td>
+          <td>{startDate}</td>
+          <td>{duration}</td>
+          <td>{duration}</td>
+          <td><a href="/admin/games/{gameName}"><button class="btn btn-default" type="submit">Edit Team</button></a></td>
+        </tr>
+        {/games}
+      </tbody>
+    </table>
+  </div>
+{/content}
